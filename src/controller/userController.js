@@ -24,7 +24,8 @@ const register = async (req, res) => {
         })
 
         const token = jwt.sign({email: result.email, id: result._id}, SECRET_JWT)
-        res.status(201).json({user: result, token: token})
+        res.status(200).json({user: result, token: token, message: "User registration success"})
+        
 
 
     } catch(error){
@@ -54,7 +55,7 @@ const login = async (req, res) => {
 
         const token = jwt.sign({email: existingUser.email, id: existingUser._id}, SECRET_JWT)
 
-        res.status(200).json({user: existingUser, token: token})
+        res.status(200).json({message: "Login success", user: existingUser, token: token})
 
     } catch (error) {
         console.log(error)

@@ -1,37 +1,31 @@
 const express = require('express');
 const app = express();
-const dotenv = require('dotenv')
-dotenv.config()
-const cors = require('cors')
+require('dotenv').config();
+let server
+// const cors = require('cors')
+require('../src/config/dbConfig');
 
-const mongoose = require('mongoose');
 app.use(express.json())
 
 const userRouter = require('./routes/userRoutes');
 const hotelRouter = require('./routes/hotelRoutes');
 
-app.get('/', (req, res) => {
-    res.send("Hello Hotel!")
-})
-
-
 app.use('/api/users', userRouter)
 
 app.use('/api/hotels', hotelRouter)
 
-const PORT = process.env.PORT || 8080
-const uri = process.env.MONGO_URI
-
-mongoose.connect(uri)
-.then( () => {
-    console.log("Database connected Successfully!!!")
-    app.listen(PORT, ()=> {
-        console.log(`Server started at port ${PORT}`)
-    })
-})
-.catch( (error) => {
-    console.log(error)
-})
 
 
+const port = process.env.Port || 8080;
+if(process.env.NODE_ENV !== 'test')
+server = app.listen(port, () => console.log(`Node server started at port ${port}`));
 
+afterAll((done) => {
+    if (server) {
+      server.close(done);
+    } else {
+      done();
+    }
+  });
+
+module.exports = { app }

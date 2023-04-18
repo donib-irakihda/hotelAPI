@@ -16,7 +16,7 @@ const register = async (req, res) => {
             contactNumber: contactNumber
         })
 
-        res.status(201).json({hotel: result})
+        res.status(201).json({hotel: result, message:"Hotel registered successfully!"})
 
     } catch (error) {
         console.log(error)

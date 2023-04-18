@@ -4,7 +4,7 @@ const auth = require('../middlewares/auth');
 
 const hotelRouter = express.Router();
 
-hotelRouter.post('/register', auth, register )
+hotelRouter.post('/register', register )
 
 hotelRouter.get('/viewHotel', viewHotel)
 
