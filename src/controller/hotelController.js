@@ -1,6 +1,12 @@
+const { validationResult } = require('express-validator')
 const HotelModel = require('../models/hotel')
 
+
 const register = async (req, res) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+    }
     const { name, address, contactNumber } = req.body;
 
     try {
