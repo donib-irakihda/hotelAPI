@@ -24,7 +24,7 @@ const register = async (req, res) => {
         })
 
         const token = jwt.sign({email: result.email, id: result._id}, SECRET_JWT)
-        res.status(200).json({user: result, token: token, message: "User registration success"})
+        res.status(201).json({user: result, token: token, message: "User registration success"})
         
 
 
