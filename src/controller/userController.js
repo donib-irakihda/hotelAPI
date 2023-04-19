@@ -3,7 +3,19 @@ const jwt = require('jsonwebtoken')
 const UserModel = require('../models/user')
 const SECRET_JWT = process.env.SECRET_JWT
 
+const { body, validationResult } = require('express-validator')
+
 const register = async (req, res) => {
+    //validation
+    await body('name').notEmpty().withMessage("Name is required").run(req);
+    await body('email').isEmail().withMessage("invalid email").run(req);
+    await body('password').isLength({ min: 6 }).withMessage("Password must be longer than 6 character").run(req);
+
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+        return res.status(400).json({errors: errors.array() });
+    }
+
     //check for existing user
     const { name, email, password } = req.body;
 
@@ -34,8 +46,17 @@ const register = async (req, res) => {
 }
 
 const login = async (req, res) => {
-    const { email, password } = req.body
+    //validation
+    await body('email').isEmail().withMessage("Invalid Email").run(req);
+    await body('password').notEmpty().withMessage("Password is required").run(req);
 
+    const errors = validationResult(req)
+
+    if(!errors.isEmpty()){
+        return res.status(400).json({errors: errors.array()})
+    }
+
+    const { email, password } = req.body
     //check if not existing user
 
     try {
