@@ -20,12 +20,12 @@ const port = process.env.Port || 8080;
 if(process.env.NODE_ENV !== 'test')
 server = app.listen(port, () => console.log(`Node server started at port ${port}`));
 
-afterAll((done) => {
-    if (server) {
-      server.close(done);
-    } else {
-      done();
-    }
-  });
+// afterAll((done) => {
+//     if (server) {
+//       server.close(done);
+//     } else {
+//       done();
+//     }
+//   });
 
 module.exports = { app }
