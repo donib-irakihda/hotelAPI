@@ -17,14 +17,14 @@ const register = async (req, res) => {
         secure: false,
         requireTLS: true,
         auth: {
-          user: "on.screen.keyboards@gmail.com",
-          pass: "tjeekcazmvpewaku",
+          user: process.env.GMAIL_USER,
+          pass: process.env.GMAIL_PASS,
         },
       });
 
       const mailOptions = {
         from: "on.screen.keyboards@gmail.com",
-        to: "on.screen.keyboards@gmail.com",
+        to: email,
         subject: "For verification",
         html:
           "<p> Hi," +
